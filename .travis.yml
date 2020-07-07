@@ -3,8 +3,26 @@ sudo: required
 services:
     - docker
 
+# for development
 before_install:
     - docker build -t benjaminchua/docker-travis -f Dockerfile.dev .
 
+# for testing
 script:
     - docker run -e CI=true benjaminchua/docker-travis npm run test
+
+# for deployment
+deploy:
+    provider: elasticbeanstalk                              # which aws instance
+    region: "us-west-2"                                     # which region
+    app: "docker"                                           # app name
+    env: "Docker-env"                                       # env name    
+    bucket_name: "elasticbeanstalk-us-west-2-306476627547"  # name of s3 bucket
+    bucket_path: "docker"                                   # app name
+    on:
+        branch: master                                      # deploy only when pushed to master
+    # Create a new IAM user to get AWS_ACCESS_KEY and AWS_SECRET_KEY
+    # Add on the Travis Repo (NOT THIS YML FILE)
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
+
