@@ -22,7 +22,7 @@ deploy:
     on:
         branch: master                                      # deploy only when pushed to master
     # Create a new IAM user to get AWS_ACCESS_KEY and AWS_SECRET_KEY
-    # Add on the Travis Repo (NOT THIS YML FILE)
+    # Add on the Travis Repo as Environment Variables (NOT THIS YML FILE)
     access_key_id: $AWS_ACCESS_KEY
     secret_access_key: $AWS_SECRET_KEY
 
